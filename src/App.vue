@@ -1,32 +1,71 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<v-app id="inspire">
+    <side-drawer/>
+    <navbar/>
+    <v-content>
+        <v-container class="fill-height" fluid>
+            <router-view/>
+        </v-container>
+    </v-content>
+    <v-btn bottom color="pink" dark fab fixed right @click="dialog = !dialog">
+        <v-icon>mdi-plus</v-icon>
+    </v-btn>
+    <v-dialog v-model="dialog" width="800px">
+        <v-card>
+            <v-card-title class="grey darken-2">
+                Create contact
+            </v-card-title>
+            <v-container>
+                <v-row class="mx-2">
+                    <v-col class="align-center justify-space-between" cols="12">
+                        <v-row align="center" class="mr-0">
+                            <v-avatar size="40px" class="mx-3">
+                                <img src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png" alt="">
+                            </v-avatar>
+                            <v-text-field placeholder="Name" />
+                        </v-row>
+                    </v-col>
+                    <v-col cols="6">
+                        <v-text-field prepend-icon="mdi-account-card-details-outline" placeholder="Company" />
+                    </v-col>
+                    <v-col cols="6">
+                        <v-text-field placeholder="Job title" />
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field prepend-icon="mdi-mail" placeholder="Email" />
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field type="tel" prepend-icon="mdi-phone" placeholder="(000) 000 - 0000" />
+                    </v-col>
+                    <v-col cols="12">
+                        <v-text-field prepend-icon="mdi-text" placeholder="Notes" />
+                    </v-col>
+                </v-row>
+            </v-container>
+            <v-card-actions>
+                <v-btn text color="primary">More</v-btn>
+                <v-spacer />
+                <v-btn text color="primary" @click="dialog = false">Cancel</v-btn>
+                <v-btn text @click="dialog = false">Save</v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-dialog>
+</v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Navbar from '@/components/Navbar.vue';
+import SideDrawer from '@/components/SideDrawer.vue';
 
-#nav {
-  padding: 30px;
+export default {
+    name: 'App',
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-</style>
+    components: {
+      Navbar,
+      SideDrawer
+    },
+    data: () => ({
+        dialog: false,
+    }),
+};
+</script>
