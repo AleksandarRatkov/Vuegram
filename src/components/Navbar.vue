@@ -9,12 +9,19 @@
       </v-btn>
     <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" label="Search" class="hidden-sm-and-down" />
     <v-spacer />
-    <v-btn icon>
-        <v-avatar size="32px" item>
-            <v-img :src="require('../assets/aleksa.jpeg')" alt="logoImage" />
+    <v-badge
+        bordered
+        bottom
+        color="green accent-4"
+        dot
+        offset-x="10"
+        offset-y="10"
+      >
+        <v-avatar size="40">
+          <v-img :src="require('../assets/aleksa.jpeg')" alt="logoImage"></v-img>
         </v-avatar>
-    </v-btn>
-    
+      </v-badge>
+
     <v-btn icon large>
         <v-avatar size="32px" item>
             <v-img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify" />
@@ -32,9 +39,7 @@ export default {
         ...mapState(['drawer'])
     },
     methods: {
-        ...mapMutations({
-            setDrawer: 'setDrawer'
-        })
+        ...mapMutations(['setDrawer'])
     },
 }
 </script>
