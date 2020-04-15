@@ -19,41 +19,45 @@
         </v-card-text>
     </v-card>
     <v-divider vertical></v-divider>
-    <v-card height="fix-content" class="mx-auto" elevation="18" v-for="(post,index) in posts" :key="index">
-        <v-list-item>
-            <v-list-item-avatar>
-                <v-img :src="require('../assets/aleksa.jpeg')" alt="logoImage"></v-img>
-            </v-list-item-avatar>
-            <v-list-item-content>
-                <v-list-item-title class="headline">{{post.userName}}</v-list-item-title>
-                <v-list-item-subtitle>{{ post.createdOn }}</v-list-item-subtitle>
-            </v-list-item-content>
-        </v-list-item>
+    <div v-for="(post,index) in posts" :key="index">
+        <v-card height="fix-content" class="mx-auto" elevation="18">
+            <v-list-item>
+                <v-list-item-avatar>
+                    <v-img :src="require('../assets/aleksa.jpeg')" alt="logoImage"></v-img>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                    <v-list-item-title class="headline">{{post.userName}}</v-list-item-title>
+                    <v-list-item-subtitle>{{ post.createdOn | formatDate }}</v-list-item-subtitle>
+                </v-list-item-content>
+            </v-list-item>
 
-        <v-card-text>
-            {{post.content}}
-        </v-card-text>
+            <v-card-text>
+                {{post.content}}
+            </v-card-text>
 
-        <v-card-actions>
-            <v-btn text color="blue darken-3">
-                Comments {{post.comments}}
-            </v-btn>
-            <v-btn text color="blue darken-3">
-                <v-btn icon :color="postLiked ? 'red darken-1' : 'blue-grey lighten-3'" @click="likePost">
-                    <v-icon>mdi-heart</v-icon>
-                </v-btn> {{post.likes}}
-            </v-btn>
-            <v-btn text color="blue darken-3">
-                View full post
-            </v-btn>
-        </v-card-actions>
-    </v-card>
+            <v-card-actions>
+                <v-btn text color="blue darken-3">
+                    Comments {{post.comments}}
+                </v-btn>
+                <v-btn text color="blue darken-3">
+                    <v-btn icon color="red darken-1" @click="likePost(post.id, post.likes)">
+                        <v-icon>mdi-heart</v-icon>
+                    </v-btn> {{post.likes}}
+                </v-btn>
+                <v-btn text color="blue darken-3">
+                    View full post
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+        <v-divider vertical></v-divider>
+    </div>
 </div>
 </template>
 
 <script>
 import {
-    mapState
+    mapState,
+    mapMutations
 } from "vuex";
 import moment from "moment";
 const fb = require("../firebaseConfig.js");
@@ -77,9 +81,13 @@ export default {
         };
     },
     computed: {
-        ...mapState(["userProfile", "currentUser", "posts", "hiddenPosts"])
+        ...mapState(["userProfile", "currentUser", "posts", "hiddenPosts"]),
+    },
+    created() {
+        this.setIsLoginPage(false)
     },
     methods: {
+        ...mapMutations(['setIsLoginPage']),
         createPost() {
             fb.postsCollection
                 .add({

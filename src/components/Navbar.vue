@@ -6,32 +6,33 @@
     </v-toolbar-title>
     <v-btn icon>
         <v-icon>mdi-facebook</v-icon>
-      </v-btn>
+    </v-btn>
     <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" label="Search" class="hidden-sm-and-down" />
     <v-spacer />
-    <v-badge
-        bordered
-        bottom
-        color="green accent-4"
-        dot
-        offset-x="10"
-        offset-y="10"
-      >
-        <v-avatar size="40">
-          <v-img :src="require('../assets/aleksa.jpeg')" alt="logoImage"></v-img>
+    <v-badge bordered bottom color="green accent-4" dot offset-x="10" offset-y="10">
+        <v-avatar left size="40">
+            <v-img :src="require('../assets/aleksa.jpeg')" alt="logoImage"></v-img>
         </v-avatar>
-      </v-badge>
+    </v-badge>
 
-    <v-btn icon large>
-        <v-avatar size="32px" item>
-            <v-img src="https://cdn.vuetifyjs.com/images/logos/logo.svg" alt="Vuetify" />
-        </v-avatar>
-    </v-btn>
+    <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+            <v-btn right text v-on="on" @click="logout">
+                <v-icon>mdi-logout</v-icon>
+            </v-btn>
+        </template>
+        <span>Logout</span>
+    </v-tooltip>
 </v-app-bar>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import {
+    mapState,
+    mapMutations
+} from 'vuex'
+
+const fb = require("../firebaseConfig.js");
 
 export default {
     name: 'Navbar',
@@ -39,7 +40,18 @@ export default {
         ...mapState(['drawer'])
     },
     methods: {
-        ...mapMutations(['setDrawer'])
+        ...mapMutations(['setDrawer']),
+        logout() {
+            fb.auth
+                .signOut()
+                .then(() => {
+                    this.$store.dispatch("clearData");
+                    this.$router.push("/login");
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
     },
 }
 </script>
