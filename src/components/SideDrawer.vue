@@ -44,11 +44,6 @@ export default {
                     icon: 'mdi-view-dashboard',
                     text: 'Dashboard',
                     route: '/dashboard'
-                },
-                {
-                    icon: 'mdi-logout-variant',
-                    text: 'Logout',
-                    route: '/logout'
                 }
             ],
         }

@@ -36,7 +36,7 @@
             </v-card-text>
 
             <v-card-actions>
-                <v-btn text color="blue darken-3">
+                <v-btn text color="blue darken-3" @click="showCommentForm(post.id)">
                     Comments {{post.comments}}
                 </v-btn>
                 <v-btn text color="blue darken-3">
@@ -44,10 +44,35 @@
                         <v-icon>mdi-heart</v-icon>
                     </v-btn> {{post.likes}}
                 </v-btn>
-                <v-btn text color="blue darken-3">
-                    View full post
+                <v-btn text color="blue darken-3" @click="showAllComments(post)">
+                    {{post.id === currentCommentId ? 'Hide all comments' : 'Show all comments'}}
                 </v-btn>
             </v-card-actions>
+
+            <template v-if="post.id === currentCommentId">
+                <v-card height="fix-content" v-for="(comment,index) in postComments" :key="index">
+                    <v-card-title>
+                        {{comment.userName}}
+                    </v-card-title>
+
+                    <v-card-subtitle>
+                        {{ comment.createdOn | formatDate }}
+                    </v-card-subtitle>
+
+                    <v-card-actions>
+                        {{ comment.content }}
+                    </v-card-actions>
+                </v-card>
+                <v-divider vertical></v-divider>
+            </template>
+
+            <v-card-actions v-if="post.id === currentPostId">
+                <v-textarea rows="1" v-model.trim="comment.content" outlined placeholder="Add a comment"></v-textarea>
+                <v-btn @click="addComment(post)" text color="blue darken-3" :disabled="comment.content === ''">
+                    Add comment
+                </v-btn>
+            </v-card-actions>
+
         </v-card>
         <v-divider vertical></v-divider>
     </div>
@@ -74,20 +99,37 @@ export default {
                 content: "",
                 postComments: 0
             },
-            showCommentModal: false,
             showPostModal: false,
             fullPost: {},
-            postComments: []
+            postComments: [],
+            currentPostId: '',
+            currentCommentId: ''
         };
     },
     computed: {
         ...mapState(["userProfile", "currentUser", "posts", "hiddenPosts"]),
+
     },
     created() {
         this.setIsLoginPage(false)
     },
     methods: {
         ...mapMutations(['setIsLoginPage']),
+        showAllComments(post) {
+            if (this.currentCommentId === post.id) {
+                this.currentCommentId = ''
+            } else {
+                this.currentPostId = ''
+                this.currentCommentId = post.id
+                this.viewPost(post)
+            }
+
+        },
+        showCommentForm(postId) {
+            this.currentPostId = postId
+            this.comment.content = ''
+            this.currentCommentId = ''
+        },
         createPost() {
             fb.postsCollection
                 .add({
@@ -112,19 +154,11 @@ export default {
             this.$store.commit("setHiddenPosts", null);
             this.$store.commit("setPosts", updatedPostsArray);
         },
-        openCommentModal(post) {
+        addComment(post) {
             this.comment.postId = post.id;
             this.comment.userId = post.userId;
             this.comment.postComments = post.comments;
-            this.showCommentModal = true;
-        },
-        closeCommentModal() {
-            this.comment.postId = "";
-            this.comment.userId = "";
-            this.comment.content = "";
-            this.showCommentModal = false;
-        },
-        addComment() {
+
             let postId = this.comment.postId;
             let postComments = this.comment.postComments;
 
@@ -144,7 +178,7 @@ export default {
                             comments: postComments + 1
                         })
                         .then(() => {
-                            this.closeCommentModal();
+                            this.currentPostId = ''
                         });
                 })
                 .catch(err => {
