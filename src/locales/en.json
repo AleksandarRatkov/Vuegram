@@ -5,7 +5,8 @@
   },
   "navbar": {
     "welcome": "Welcome to Vuegram",
-    "search": "Search"
+    "search": "Search",
+    "logout": "Logout"
   },
   "settings": {
     "alert": "You've successfully updated your settings!",

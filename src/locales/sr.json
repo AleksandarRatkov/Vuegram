@@ -5,7 +5,8 @@
   },
   "navbar": {
     "welcome": "Dobrodošli na Vuegram",
-    "search": "Pretraži"
+    "search": "Pretraži",
+    "logout": "Izloguj se"
   },
   "settings": {
     "alert": "Uspešno ste ažurirali vaš profil!",

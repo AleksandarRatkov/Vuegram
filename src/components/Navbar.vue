@@ -1,12 +1,12 @@
 <template>
 <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
     <v-app-bar-nav-icon @click.native="setDrawer(!drawer)" />
-    <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
-        <span class="hidden-sm-and-down">{{$t('navbar.welcome')}}</span>
-    </v-toolbar-title>
     <v-btn icon>
         <v-icon>mdi-facebook</v-icon>
     </v-btn>
+    <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
+        <span class="hidden-sm-and-down">{{$t('navbar.welcome')}}</span>
+    </v-toolbar-title>
     <v-text-field flat solo-inverted hide-details prepend-inner-icon="mdi-magnify" :label="$t('navbar.search')" class="hidden-sm-and-down" />
     <v-spacer />
     <v-badge bordered bottom color="green accent-4" dot offset-x="10" offset-y="10">
@@ -21,7 +21,7 @@
                 <v-icon>mdi-logout</v-icon>
             </v-btn>
         </template>
-        <span>Logout</span>
+        <span>{{$t('navbar.logout')}}</span>
     </v-tooltip>
     <div class="locale">
         <v-select v-model="$i18n.locale" :items="langs" item-value="locale" item-text="lang" outlined></v-select>
