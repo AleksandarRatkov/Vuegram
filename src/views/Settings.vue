@@ -4,21 +4,20 @@
         <v-layout>
             <v-flex>
                 <v-alert v-model="showSuccess" transition="scale-transition" dismissible color="green" border="left" elevation="20" colored-border icon="mdi-checkbox-marked-circle-outline">
-                    You've successfully updated your settings!
-                </v-alert>
+                    {{$t('settings.alert')}} </v-alert>
                 <v-card height="fix-content" elevation="18">
                     <v-list-item>
                         <v-list-item-content>
-                            <v-list-item-title class="headline">Settings</v-list-item-title>
-                            <v-list-item-subtitle>Update your settings</v-list-item-subtitle>
+                            <v-list-item-title class="headline">{{$t('settings.title')}}</v-list-item-title>
+                            <v-list-item-subtitle>{{$t('settings.subtitle')}}</v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
                     <v-card-text>
-                        <v-text-field v-model="userProfile.name" label="Name" name="name" prepend-icon="person" type="text" />
-                        <v-text-field v-model="userProfile.title" :placeholder="userProfile.title" label="Title" name="title" prepend-icon="domain" type="text" />
+                        <v-text-field v-model="userProfile.name" :label="$t('settings.form.name')" name="name" prepend-icon="person" type="text" />
+                        <v-text-field v-model="userProfile.title" :placeholder="userProfile.title" :label="$t('settings.form.title')" name="title" prepend-icon="domain" type="text" />
 
                         <v-btn class="white--text" min-width="100px" color="blue darken-3" :disabled="userProfile.name ==='' && userProfile.title === ''" @click="updateProfile">
-                            Update Profile
+                            {{$t('settings.form.updateProfile')}}
                         </v-btn>
                     </v-card-text>
                 </v-card>
@@ -40,7 +39,7 @@ export default {
             showSuccess: false
         };
     },
-    created () {
+    created() {
         this.setIsLoginPage(false)
     },
     computed: {

@@ -1,0 +1,28 @@
+{
+  "sideDrawer": {
+    "dashboard": "Dashboard",
+    "settings": "Settings"
+  },
+  "navbar": {
+    "welcome": "Welcome to Vuegram",
+    "search": "Search"
+  },
+  "settings": {
+    "alert": "You've successfully updated your settings!",
+    "title": "Settings",
+    "subtitle": "Update your settings",
+    "form": {
+      "name": "Name",
+      "title": "Company",
+      "updateProfile": "Update profile"
+    }
+  },
+  "dashboard": {
+    "post": "Post",
+    "comments": "Comments",
+    "showComments": "Show all comments",
+    "hideComments": "Hide all comments",
+    "addComment": "Add comment",
+    "onYourMind": "What's on your mind?"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "sideDrawer": {
+    "dashboard": "Početna strana",
+    "settings": "Podešavanja"
+  },
+  "navbar": {
+    "welcome": "Dobrodošli na Vuegram",
+    "search": "Pretraži"
+  },
+  "settings": {
+    "alert": "Uspešno ste ažurirali vaš profil!",
+    "title": "Podešavanja",
+    "subtitle": "Ažurirajte vaša podešavanja",
+    "form": {
+      "name": "Ime",
+      "title": "Kompanija",
+      "updateProfile": "Ažurirajte profil"
+    }
+  },
+  "dashboard": {
+    "post": "Okači",
+    "comments": "Komentari",
+    "showComments": "Prikaži sve komentare",
+    "hideComments": "Sakrij sve komentare",
+    "addComment": "Dodaj komentar",
+    "onYourMind": "O čemu razmišljaš?"
+  }
+}

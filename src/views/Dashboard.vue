@@ -12,9 +12,9 @@
         </v-list-item>
 
         <v-card-text>
-            <v-textarea rows="3" v-model.trim="post.content" outlined placeholder="What's on your mind?"></v-textarea>
+            <v-textarea rows="3" v-model.trim="post.content" outlined :placeholder="$t('dashboard.onYourMind')"></v-textarea>
             <v-btn class="white--text" min-width="100px" color="blue darken-3" :disabled="post.content===''" @click="createPost">
-                Post
+                {{$t('dashboard.post')}}
             </v-btn>
         </v-card-text>
     </v-card>
@@ -37,7 +37,7 @@
 
             <v-card-actions>
                 <v-btn text color="blue darken-3" @click="showCommentForm(post.id)">
-                    Comments {{post.comments}}
+                    {{$t('dashboard.comments')}} {{post.comments}}
                 </v-btn>
                 <v-btn text color="blue darken-3">
                     <v-btn icon color="red darken-1" @click="likePost(post.id, post.likes)">
@@ -45,7 +45,7 @@
                     </v-btn> {{post.likes}}
                 </v-btn>
                 <v-btn text color="blue darken-3" @click="showAllComments(post)">
-                    {{post.id === currentCommentId ? 'Hide all comments' : 'Show all comments'}}
+                    {{ $t(post.id === currentCommentId ? 'dashboard.hideComments' : 'dashboard.showComments')}}
                 </v-btn>
             </v-card-actions>
 
@@ -67,9 +67,9 @@
             </template>
 
             <v-card-actions v-if="post.id === currentPostId">
-                <v-textarea rows="1" v-model.trim="comment.content" outlined placeholder="Add a comment"></v-textarea>
+                <v-textarea rows="1" v-model.trim="comment.content" outlined :placeholder="$t('dashboard.addComment')"></v-textarea>
                 <v-btn @click="addComment(post)" text color="blue darken-3" :disabled="comment.content === ''">
-                    Add comment
+                    {{$t('dashboard.addComment')}}
                 </v-btn>
             </v-card-actions>
 
