@@ -147,12 +147,6 @@ export default {
                     console.log(err);
                 });
         },
-        showNewPosts() {
-            let updatedPostsArray = this.hiddenPosts.concat(this.posts);
-            // clear hiddenPosts array and update posts array
-            this.setHiddenPosts(null);
-            this.setPosts(updatedPostsArray);
-        },
         addComment(post) {
             this.comment.postId = post.id;
             this.comment.userId = post.userId;
