@@ -16,7 +16,7 @@
                         <v-text-field v-model="userProfile.name" :label="$t('settings.form.name')" name="name" prepend-icon="person" type="text" />
                         <v-text-field v-model="userProfile.title" :placeholder="userProfile.title" :label="$t('settings.form.title')" name="title" prepend-icon="domain" type="text" />
 
-                        <v-btn class="white--text" min-width="100px" color="blue darken-3" :disabled="userProfile.name ==='' && userProfile.title === ''" @click="updateProfile">
+                        <v-btn class="white--text" min-width="100px" color="blue darken-3" :disabled="userProfile.name ==='' && userProfile.title === ''" @click="updateUserProfile">
                             {{$t('settings.form.updateProfile')}}
                         </v-btn>
                     </v-card-text>
@@ -30,7 +30,8 @@
 <script>
 import {
     mapState,
-    mapMutations
+    mapMutations,
+    mapActions
 } from "vuex";
 
 export default {
@@ -47,8 +48,9 @@ export default {
     },
     methods: {
         ...mapMutations(['setIsLoginPage']),
-        updateProfile() {
-            this.$store.dispatch("updateProfile", {
+        ...mapActions(['updateProfile']),
+        updateUserProfile() {
+            this.updateProfile({
                 name: this.userProfile.name,
                 title: this.userProfile.title
             });

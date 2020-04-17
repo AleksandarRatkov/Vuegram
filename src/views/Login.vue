@@ -5,7 +5,8 @@
             <v-toolbar color="blue darken-3" dark flat>
                 <v-toolbar-title>Login form</v-toolbar-title>
             </v-toolbar>
-            <v-card-text>
+            <v-progress-circular :size="50" color="primary" indeterminate v-if="performingRequest"></v-progress-circular>
+            <v-card-text v-if="!performingRequest">
                 <v-form @submit.prevent>
                     <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
                         <v-text-field v-model="loginForm.email" label="Email" :error-messages="errors" required name="loginEmail" prepend-icon="person" />
@@ -28,7 +29,8 @@
             <v-toolbar color="blue darken-3" dark flat>
                 <v-toolbar-title>Signup form</v-toolbar-title>
             </v-toolbar>
-            <v-card-text>
+            <v-progress-circular :size="50" color="primary" indeterminate v-if="performingRequest"></v-progress-circular>
+            <v-card-text v-if="!performingRequest">
                 <v-form @submit.prevent>
                     <v-text-field v-model="signupForm.name" label="Name" name="name" prepend-icon="person" type="text" />
                     <v-text-field v-model="signupForm.title" label="Title" name="title" prepend-icon="domain" type="text" />
@@ -48,7 +50,10 @@
             <v-toolbar color="blue darken-3" dark flat>
                 <v-toolbar-title>Reset a password</v-toolbar-title>
             </v-toolbar>
-            <v-card-text>
+            <div>
+                <v-progress-circular :size="100" color="primary" indeterminate v-if="performingRequest"></v-progress-circular>
+            </div>
+            <v-card-text v-if="!performingRequest">
                 <v-card-text>We will send you an email to reset your password</v-card-text>
                 <v-form @submit.prevent>
                     <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
@@ -68,7 +73,8 @@
 
 <script>
 import {
-    mapMutations
+    mapMutations,
+    mapActions
 } from 'vuex'
 import {
     required,
@@ -127,7 +133,8 @@ export default {
         this.setIsLoginPage(true)
     },
     methods: {
-        ...mapMutations(['setIsLoginPage']),
+        ...mapMutations(['setIsLoginPage', 'setCurrentUser']),
+        ...mapActions(['fetchUserProfile']),
         setPerformingRequest(value) {
             this.performingRequest = value;
         },
@@ -139,9 +146,8 @@ export default {
                     this.loginForm.password
                 )
                 .then(user => {
-                    // this.$store.commit("setCurrentUser", user);
-                    this.$store.commit("setCurrentUser", user.user);
-                    this.$store.dispatch("fetchUserProfile");
+                    this.setCurrentUser(user.user);
+                    this.fetchUserProfile();
                     this.$router.push("/dashboard");
                     this.setPerformingRequest(false);
                 })
@@ -160,7 +166,7 @@ export default {
                     this.signupForm.password
                 )
                 .then(user => {
-                    this.$store.commit("setCurrentUser", user.user);
+                    this.setCurrentUser(user.user);
                     // create user obj
                     fb.usersCollection
                         .doc(user.user.uid)
@@ -169,7 +175,7 @@ export default {
                             title: this.signupForm.title
                         })
                         .then(() => {
-                            this.$store.dispatch("fetchUserProfile");
+                            this.fetchUserProfile();
                             this.$router.push("/dashboard");
                         })
                         .catch(err => {

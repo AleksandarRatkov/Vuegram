@@ -108,13 +108,12 @@ export default {
     },
     computed: {
         ...mapState(["userProfile", "currentUser", "posts", "hiddenPosts"]),
-
     },
     created() {
         this.setIsLoginPage(false)
     },
     methods: {
-        ...mapMutations(['setIsLoginPage']),
+        ...mapMutations(['setIsLoginPage','setHiddenPosts','setPosts']),
         showAllComments(post) {
             if (this.currentCommentId === post.id) {
                 this.currentCommentId = ''
@@ -151,8 +150,8 @@ export default {
         showNewPosts() {
             let updatedPostsArray = this.hiddenPosts.concat(this.posts);
             // clear hiddenPosts array and update posts array
-            this.$store.commit("setHiddenPosts", null);
-            this.$store.commit("setPosts", updatedPostsArray);
+            this.setHiddenPosts(null);
+            this.setPosts(updatedPostsArray);
         },
         addComment(post) {
             this.comment.postId = post.id;

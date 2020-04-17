@@ -32,7 +32,8 @@
 <script>
 import {
     mapState,
-    mapMutations
+    mapMutations,
+    mapActions
 } from 'vuex'
 
 const fb = require("../firebaseConfig.js");
@@ -57,11 +58,12 @@ export default {
     },
     methods: {
         ...mapMutations(['setDrawer']),
+        ...mapActions(['clearData']),
         logout() {
             fb.auth
                 .signOut()
                 .then(() => {
-                    this.$store.dispatch("clearData");
+                    this.clearData();
                     this.$router.push("/login");
                 })
                 .catch(err => {
