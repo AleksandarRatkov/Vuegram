@@ -1,11 +1,9 @@
 <template>
 <v-app id="inspire">
-    <side-drawer v-if="!isLoginPage"/>
-    <navbar v-if="!isLoginPage"/>
+    <side-drawer v-if="!isLoginPage" />
+    <navbar v-if="!isLoginPage" />
     <v-content>
-        <v-container fluid>
-            <router-view/>
-        </v-container>
+        <router-view />
     </v-content>
 </v-app>
 </template>
@@ -13,14 +11,16 @@
 <script>
 import Navbar from '@/components/Navbar.vue';
 import SideDrawer from '@/components/SideDrawer.vue';
-import { mapState } from 'vuex';
+import {
+    mapState
+} from 'vuex';
 
 export default {
     name: 'App',
 
     components: {
-      Navbar,
-      SideDrawer
+        Navbar,
+        SideDrawer
     },
     computed: {
         ...mapState(['isLoginPage'])

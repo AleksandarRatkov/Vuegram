@@ -20,10 +20,10 @@
   },
   "dashboard": {
     "post": "Post",
-    "comments": "Comments",
     "showComments": "Show all comments",
     "hideComments": "Hide all comments",
     "addComment": "Add comment",
-    "onYourMind": "What's on your mind?"
+    "onYourMind": "What's on your mind?",
+    "showFullPost": "Click to see complete post"
   }
 }

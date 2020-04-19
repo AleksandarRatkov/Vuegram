@@ -20,10 +20,10 @@
   },
   "dashboard": {
     "post": "Okači",
-    "comments": "Komentari",
     "showComments": "Prikaži sve komentare",
     "hideComments": "Sakrij sve komentare",
     "addComment": "Dodaj komentar",
-    "onYourMind": "O čemu razmišljaš?"
+    "onYourMind": "O čemu razmišljaš?",
+    "showFullPost": "Kliknite da vidite ceo post"
   }
 }
