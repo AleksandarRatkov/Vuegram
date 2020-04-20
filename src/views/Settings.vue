@@ -42,11 +42,11 @@ export default {
         this.setIsLoginPage(false)
     },
     computed: {
-        ...mapState(["userProfile"]),
+        ...mapState('user',["userProfile"]),
     },
     methods: {
         ...mapMutations(['setIsLoginPage']),
-        ...mapActions(['updateProfile']),
+        ...mapActions(['user/updateProfile']),
         updateUserProfile() {
             this.updateProfile({
                 name: this.userProfile.name,

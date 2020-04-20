@@ -157,8 +157,8 @@ export default {
         this.setIsLoginPage(true)
     },
     methods: {
-        ...mapMutations(['setIsLoginPage', 'setCurrentUser']),
-        ...mapActions(['fetchUserProfile']),
+        ...mapMutations(['setIsLoginPage', 'user/setCurrentUser']),
+        ...mapActions(['user/fetchUserProfile']),
         setPerformingRequest(value) {
             this.performingRequest = value;
         },
