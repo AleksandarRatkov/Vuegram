@@ -1,7 +1,6 @@
 <template>
 <v-app id="inspire">
-    <side-drawer v-if="!isLoginPage" />
-    <navbar v-if="!isLoginPage" />
+    <component :is="layout" />
     <v-content>
         <router-view />
     </v-content>
@@ -9,24 +8,21 @@
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue';
-import SideDrawer from '@/components/SideDrawer.vue';
+import Default from './layouts/Default'
 import {
     mapState
 } from 'vuex';
 
 export default {
     name: 'App',
-
     components: {
-        Navbar,
-        SideDrawer
+        Default
     },
     computed: {
-        ...mapState(['isLoginPage'])
-    },
-    data: () => ({
-        dialog: false,
-    }),
+        ...mapState(['isLoginPage']),
+        layout() {
+            return (this.$route.meta.layout)
+        }
+    }
 };
 </script>

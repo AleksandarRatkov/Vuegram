@@ -29,7 +29,7 @@
                                 </ValidationProvider>
 
                                 <ValidationProvider v-slot="{ errors }" name="password" rules="required|min:6">
-                                    <v-text-field v-model="loginForm.password" id="password" :error-messages="errors" label="Password" name="password" prepend-icon="lock" type="password" />
+                                    <v-text-field v-model="loginForm.password" id="loginPassword" :error-messages="errors" label="Password" name="password" prepend-icon="lock" type="password" />
                                 </ValidationProvider>
                             </v-form>
                         </v-card-text>
@@ -55,7 +55,7 @@
                                 <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
                                     <v-text-field v-model="signupForm.email" :error-messages="errors" required label="Email" name="signupEmail" prepend-icon="email" type="text" />
                                 </ValidationProvider>
-                                <v-text-field v-model="signupForm.password" id="password" label="Password" name="password" prepend-icon="lock" type="password" />
+                                <v-text-field v-model="signupForm.password" id="signUpPassword" label="Password" name="password" prepend-icon="lock" type="password" />
                             </v-form>
                         </v-card-text>
                         <v-card-actions>
@@ -153,12 +153,9 @@ export default {
             errorMsg: "",
         };
     },
-    created() {
-        this.setIsLoginPage(true)
-    },
     methods: {
-        ...mapMutations(['setIsLoginPage', 'user/setCurrentUser']),
-        ...mapActions(['user/fetchUserProfile']),
+        ...mapMutations({setCurrentUser: 'user/setCurrentUser'}),
+        ...mapActions({fetchUserProfile: 'user/fetchUserProfile'}),
         setPerformingRequest(value) {
             this.performingRequest = value;
         },

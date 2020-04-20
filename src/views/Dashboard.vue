@@ -89,7 +89,6 @@
 <script>
 import {
     mapState,
-    mapMutations
 } from "vuex";
 import moment from "moment";
 const fb = require("../firebaseConfig.js");
@@ -116,7 +115,6 @@ export default {
         };
     },
     computed: {
-        // ...mapState(["user/userProfile", "user/currentUser", "post/posts", "post/hiddenPosts"])
         ...mapState({
             userProfile: state => state.user.userProfile,
             currentUser: state => state.user.currentUser,
@@ -124,11 +122,7 @@ export default {
             hiddenPosts: state => state.post.hiddenPosts
         })
     },
-    created() {
-        this.setIsLoginPage(false)
-    },
     methods: {
-        ...mapMutations(['setIsLoginPage', 'post/setHiddenPosts', 'post/setPosts']),
         didUserLikePost(postId) {
             let docId = `${this.currentUser.uid}_${postId}`;
 

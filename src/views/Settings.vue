@@ -28,7 +28,6 @@
 <script>
 import {
     mapState,
-    mapMutations,
     mapActions
 } from "vuex";
 
@@ -38,15 +37,14 @@ export default {
             showSuccess: false
         };
     },
-    created() {
-        this.setIsLoginPage(false)
-    },
     computed: {
-        ...mapState('user',["userProfile"]),
+        // ...mapState('user',["userProfile"]),
+        ...mapState({
+            userProfile: state => state.user.userProfile,
+        })
     },
     methods: {
-        ...mapMutations(['setIsLoginPage']),
-        ...mapActions(['user/updateProfile']),
+        ...mapActions({updateProfile: 'user/updateProfile'}),
         updateUserProfile() {
             this.updateProfile({
                 name: this.userProfile.name,

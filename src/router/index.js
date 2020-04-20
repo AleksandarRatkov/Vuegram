@@ -13,6 +13,7 @@ Vue.use(VueRouter)
     name: 'Settings',
     component: Settings,
     meta: {
+      layout: 'default',
       requiresAuth: true
     }
   },
@@ -21,6 +22,7 @@ Vue.use(VueRouter)
     name: 'Dashboard',
     component: Dashboard,
     meta: {
+      layout: 'default',
       requiresAuth: true
     }
   },

@@ -48,15 +48,11 @@ fb.auth.onAuthStateChanged(user => {
 
 export const store = new Vuex.Store({
   state: {
-    drawer: true,
-    isLoginPage: false
+    drawer: true
   },
   mutations: {
     setDrawer(state,value) {
       state.drawer = value;
-    },
-    setIsLoginPage(state,value) {
-      state.isLoginPage = value;
     }
   },
   actions: {
