@@ -1,5 +1,5 @@
 <template>
-<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app :src="require('../assets/background.webp')" dark>
+<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app src="../assets/background.webp" dark>
     <v-app-bar-nav-icon @click.native="setDrawer(!drawer)" />
     <v-btn icon>
         <v-icon>mdi-facebook</v-icon>
@@ -11,7 +11,7 @@
     <v-spacer />
     <v-badge bordered bottom color="green accent-4" dot offset-x="10" offset-y="10">
         <v-avatar left size="40">
-            <v-img :src="require('../assets/aleksa.jpeg')" alt="logoImage"></v-img>
+            <v-img src="../assets/aleksa.jpeg" alt="logoImage"></v-img>
         </v-avatar>
     </v-badge>
 

@@ -5,7 +5,7 @@
             <v-card height="fix-content" class="mx-auto" elevation="18">
                 <v-list-item>
                     <v-list-item-avatar>
-                        <v-img :src="require('../assets/aleksa.jpeg')" alt="logoImage"></v-img>
+                        <v-img src="../assets/aleksa.jpeg" alt="logoImage"></v-img>
                     </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title class="headline">{{userProfile.name}}</v-list-item-title>
@@ -26,7 +26,7 @@
             <v-card height="fix-content" class="mx-auto" elevation="18">
                 <v-list-item>
                     <v-list-item-avatar>
-                        <v-img :src="require('../assets/aleksa.jpeg')" alt="logoImage"></v-img>
+                        <v-img src="../assets/aleksa.jpeg" alt="logoImage"></v-img>
                     </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title class="headline">{{post.userName}}</v-list-item-title>
@@ -120,7 +120,7 @@ export default {
             currentUser: state => state.user.currentUser,
             posts: state => state.post.posts,
             hiddenPosts: state => state.post.hiddenPosts
-        })
+        }),
     },
     methods: {
         didUserLikePost(postId) {

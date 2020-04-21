@@ -14,9 +14,9 @@
 
         <v-flex md6 class="full-height">
             <v-row align="center" justify="center">
-                <v-col cols="12" sm="8" md="8">
+                <v-col cols="12" sm="10" md="10">
                     <v-card class="elevation-12" v-show="showLoginForm">
-                        <v-toolbar :src="require('../assets/background.webp')" dark flat>
+                        <v-toolbar src="../assets/background.webp" dark flat>
                             <v-toolbar-title>Login form</v-toolbar-title>
                         </v-toolbar>
                         <v-flex class="position" md4 offset-md4>
@@ -29,10 +29,18 @@
                                 </ValidationProvider>
 
                                 <ValidationProvider v-slot="{ errors }" name="password" rules="required|min:6">
-                                    <v-text-field v-model="loginForm.password" id="loginPassword" :error-messages="errors" label="Password" name="password" prepend-icon="lock" type="password" />
+                                    <v-text-field :type="showPassword ? 'text' : 'password'" @click:append="showPassword = !showPassword" :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" v-model="loginForm.password" id="loginPassword" :error-messages="errors" label="Password" name="password" prepend-icon="lock" />
                                 </ValidationProvider>
                             </v-form>
                         </v-card-text>
+                        <v-flex md4 offset-md4>
+                            <v-card-text @click="loginWithGoogle">
+                                <v-avatar size="40" class="logo">
+                                    <v-img src="../assets/google-logo.png" alt="logoImage"></v-img>
+                                </v-avatar>
+                                <h4 class="sign-in">Sign In with Google</h4>
+                            </v-card-text>
+                        </v-flex>
                         <v-card-actions>
                             <v-btn text color="primary" @click="togglePasswordReset">Forgot Password</v-btn>
                             <v-btn text color="primary" @click="toggleForm">Create an account</v-btn>
@@ -109,6 +117,7 @@ import {
     extend,
     ValidationProvider
 } from 'vee-validate'
+import firebase from 'firebase';
 
 const fb = require("../firebaseConfig");
 
@@ -151,13 +160,30 @@ export default {
             showForgotPassword: false,
             performingRequest: false,
             errorMsg: "",
+            showPassword: false,
+            userExists: false
         };
     },
     methods: {
-        ...mapMutations({setCurrentUser: 'user/setCurrentUser'}),
-        ...mapActions({fetchUserProfile: 'user/fetchUserProfile'}),
+        ...mapMutations({
+            setCurrentUser: 'user/setCurrentUser'
+        }),
+        ...mapActions({
+            fetchUserProfile: 'user/fetchUserProfile'
+        }),
         setPerformingRequest(value) {
             this.performingRequest = value;
+        },
+        loginWithGoogle() {
+            this.setPerformingRequest(true);
+            const provider = new firebase.auth.GoogleAuthProvider();
+            fb.auth.signInWithPopup(provider).then((user) => {
+                this.checkIfUserExist(user.user);
+            }).catch((err) => {
+                console.log(err);
+                this.errorMsg = err.message;
+                this.setPerformingRequest(false);
+            });
         },
         login() {
             this.setPerformingRequest(true);
@@ -187,29 +213,45 @@ export default {
                     this.signupForm.password
                 )
                 .then(user => {
-                    this.setCurrentUser(user.user);
-                    // create user obj
-                    fb.usersCollection
-                        .doc(user.user.uid)
-                        .set({
-                            name: this.signupForm.name,
-                            title: this.signupForm.title
-                        })
-                        .then(() => {
-                            this.fetchUserProfile();
-                            this.$router.push("/dashboard");
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            this.errorMsg = err.message;
-                        });
-                    this.setPerformingRequest(false);
+                    this.addUserToDb(user.user, this.signupForm.name, this.signupForm.title)
                 })
                 .catch(err => {
                     console.log(err);
                     this.errorMsg = err.message;
                     this.setPerformingRequest(false);
                 });
+        },
+        addUserToDb(user, name, title) {
+            this.setCurrentUser(user);
+            fb.usersCollection
+                .doc(user.uid)
+                .set({
+                    name: name,
+                    title: title
+                })
+                .then(() => {
+                    this.afterSuccessfulLogin();
+                })
+                .catch(err => {
+                    console.log(err);
+                    this.errorMsg = err.message;
+                });
+        },
+        afterSuccessfulLogin() {
+            this.fetchUserProfile();
+            this.$router.push("/dashboard");
+            this.setPerformingRequest(false);
+        },
+        checkIfUserExist(user) {
+            fb.usersCollection.doc(user.uid).get().then(res => {
+                if (!res.exists) {
+                    this.addUserToDb(user, user.displayName, '');
+                } else {
+                    this.afterSuccessfulLogin();
+                }
+            }).catch(err => {
+                console.log(err)
+            })
         },
         resetPassword() {
             this.performingRequest = true;
@@ -282,5 +324,16 @@ h1 {
 
 .full-height a {
     color: #fff;
+}
+
+.logo {
+    margin-left: 40px;
+    cursor: pointer;
+}
+
+.sign-in {
+    color: #0d76eb;
+    margin-top: 10px;
+    cursor: pointer;
 }
 </style>
