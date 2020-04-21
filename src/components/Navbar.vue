@@ -1,5 +1,5 @@
 <template>
-<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app color="blue darken-3" dark>
+<v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app :src="require('../assets/background.webp')" dark>
     <v-app-bar-nav-icon @click.native="setDrawer(!drawer)" />
     <v-btn icon>
         <v-icon>mdi-facebook</v-icon>

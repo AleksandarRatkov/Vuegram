@@ -15,7 +15,7 @@
 
                 <v-card-text>
                     <v-textarea rows="3" v-model.trim="post.content" outlined :placeholder="$t('dashboard.onYourMind')"></v-textarea>
-                    <v-btn class="white--text" min-width="100px" color="blue darken-3" :disabled="post.content===''" @click="createPost">
+                    <v-btn class="white--text" min-width="100px" color="primary" :disabled="post.content===''" @click="createPost">
                         {{$t('dashboard.post')}}
                     </v-btn>
                 </v-card-text>
@@ -40,15 +40,15 @@
                 </v-card-text>
 
                 <v-card-actions>
-                    <v-btn text color="blue darken-3" @click="showCommentForm(post.id)">
+                    <v-btn text color="primary" @click="showCommentForm(post.id)">
                         {{$t('dashboard.addComment')}}
                     </v-btn>
-                    <v-btn text color="blue darken-3">
+                    <v-btn text color="primary">
                         <v-btn icon color="grey" @click="likePost(post.id, post.likes)">
                             <v-icon>mdi-heart</v-icon>
                         </v-btn> {{post.likes}}
                     </v-btn>
-                    <v-btn text color="blue darken-3" :disabled="post.comments === 0" @click="showAllComments(post)">
+                    <v-btn text color="primary" :disabled="post.comments === 0" @click="showAllComments(post)">
                         {{ $t(post.id === currentCommentId ? 'dashboard.hideComments' : 'dashboard.showComments')}}({{post.comments}})
                     </v-btn>
                 </v-card-actions>
@@ -75,7 +75,7 @@
 
                 <v-card-actions v-if="post.id === currentPostId">
                     <v-textarea rows="1" v-model.trim="comment.content" outlined :placeholder="$t('dashboard.addComment')"></v-textarea>
-                    <v-btn @click="addComment(post)" text color="blue darken-3" :disabled="comment.content === ''">
+                    <v-btn @click="addComment(post)" text color="primary" :disabled="comment.content === ''">
                         {{$t('dashboard.addComment')}}
                     </v-btn>
                 </v-card-actions>

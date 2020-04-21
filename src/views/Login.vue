@@ -16,7 +16,7 @@
             <v-row align="center" justify="center">
                 <v-col cols="12" sm="8" md="8">
                     <v-card class="elevation-12" v-show="showLoginForm">
-                        <v-toolbar color="blue darken-3" dark flat>
+                        <v-toolbar :src="require('../assets/background.webp')" dark flat>
                             <v-toolbar-title>Login form</v-toolbar-title>
                         </v-toolbar>
                         <v-flex class="position" md4 offset-md4>
@@ -34,15 +34,15 @@
                             </v-form>
                         </v-card-text>
                         <v-card-actions>
-                            <v-btn text color="blue darken-3" @click="togglePasswordReset">Forgot Password</v-btn>
-                            <v-btn text color="blue darken-3" @click="toggleForm">Create an account</v-btn>
+                            <v-btn text color="primary" @click="togglePasswordReset">Forgot Password</v-btn>
+                            <v-btn text color="primary" @click="toggleForm">Create an account</v-btn>
                             <v-spacer />
-                            <v-btn class="white--text" color="blue darken-3" @click="login">Login</v-btn>
+                            <v-btn class="white--text" color="primary" @click="login">Login</v-btn>
                         </v-card-actions>
                     </v-card>
 
                     <v-card class="elevation-12" v-show="!showLoginForm && !showForgotPassword">
-                        <v-toolbar color="blue darken-3" dark flat>
+                        <v-toolbar color="primary" dark flat>
                             <v-toolbar-title>Signup form</v-toolbar-title>
                         </v-toolbar>
                         <v-flex class="position" md4 offset-md4>
@@ -60,12 +60,12 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer />
-                            <v-btn text color="blue darken-3" @click="togglePasswordReset">Back to login</v-btn>
-                            <v-btn class="white--text" color="blue darken-3" @click="signup">Sign Up</v-btn>
+                            <v-btn text color="primary" @click="togglePasswordReset">Back to login</v-btn>
+                            <v-btn class="white--text" color="primary" @click="signup">Sign Up</v-btn>
                         </v-card-actions>
                     </v-card>
                     <v-card class="elevation-12" v-show="showForgotPassword">
-                        <v-toolbar color="blue darken-3" dark flat>
+                        <v-toolbar color="primary" dark flat>
                             <v-toolbar-title>Reset a password</v-toolbar-title>
                         </v-toolbar>
 
@@ -84,8 +84,8 @@
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer />
-                            <v-btn text color="blue darken-3" @click="togglePasswordReset">Back to login</v-btn>
-                            <v-btn class="white--text" color="blue darken-3" @click="resetPassword">Submit</v-btn>
+                            <v-btn text color="primary" @click="togglePasswordReset">Back to login</v-btn>
+                            <v-btn class="white--text" color="primary" @click="resetPassword">Submit</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-col>
@@ -261,7 +261,9 @@ $white: #fff;
 }
 
 .background {
-    background: linear-gradient(to right, $primary 0%, $primary 50%, $white 50%, $white 100%);
+    // background: linear-gradient(to right, $primary 0%, $primary 50%, $white 50%, $white 100%);
+    background-image: url('../assets/background.webp');
+    background-size: 50vw 100vh;
     padding-left: 20vh;
 }
 

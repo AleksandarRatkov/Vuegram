@@ -24,15 +24,16 @@ export default {
     name: 'SideDrawer',
     data() {
         return {
-            items: [{
+            items: [
+                {
+                    icon: 'mdi-view-dashboard',
+                    text: 'sideDrawer.homepage',
+                    route: '/dashboard'
+                },
+                {
                     icon: 'mdi-account-cog',
                     text: 'sideDrawer.settings',
                     route: '/settings'
-                },
-                {
-                    icon: 'mdi-view-dashboard',
-                    text: 'sideDrawer.dashboard',
-                    route: '/dashboard'
                 }
             ]
         }
