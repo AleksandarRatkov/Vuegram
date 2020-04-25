@@ -1,7 +1,8 @@
 {
   "sideDrawer": {
     "homepage": "Homepage",
-    "settings": "Settings"
+    "settings": "Settings",
+    "contacts": "Contacts"
   },
   "navbar": {
     "welcome": "Welcome to Vuegram",

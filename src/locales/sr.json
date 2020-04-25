@@ -1,7 +1,8 @@
 {
   "sideDrawer": {
     "homepage": "Početna strana",
-    "settings": "Podešavanja"
+    "settings": "Podešavanja",
+    "contacts": "Kontakti"
   },
   "navbar": {
     "welcome": "Dobrodošli na Vuegram",

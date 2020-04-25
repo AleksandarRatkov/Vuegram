@@ -18,17 +18,23 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import {
+    mapState
+} from 'vuex'
 
 export default {
     name: 'SideDrawer',
     data() {
         return {
-            items: [
-                {
+            items: [{
                     icon: 'mdi-view-dashboard',
                     text: 'sideDrawer.homepage',
                     route: '/dashboard'
+                },
+                {
+                    icon: 'mdi-contacts',
+                    text: 'sideDrawer.contacts',
+                    route: '/contacts'
                 },
                 {
                     icon: 'mdi-account-cog',

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Settings from '../views/Settings.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Contacts from '../views/Contacts.vue'
 import Login from '../views/Login.vue'
 import firebase from 'firebase'
 
@@ -21,6 +22,15 @@ Vue.use(VueRouter)
     path: '/dashboard',
     name: 'Dashboard',
     component: Dashboard,
+    meta: {
+      layout: 'default',
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/contacts',
+    name: 'Contacts',
+    component: Contacts,
     meta: {
       layout: 'default',
       requiresAuth: true
