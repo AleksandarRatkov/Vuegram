@@ -12,6 +12,7 @@
     "core-js": "^3.6.4",
     "firebase": "^7.14.0",
     "is-image-url": "^1.1.8",
+    "lodash": "^4.17.15",
     "material-design-icons-iconfont": "^5.0.1",
     "moment": "^2.24.0",
     "vee-validate": "^3.2.5",
