@@ -1,4 +1,5 @@
-# vuetify-app
+# Vuegram
+A simple social media web app built with Vue.js, Vuetify and Firebase's Cloud Firestore
 
 ## Project setup
 ```
