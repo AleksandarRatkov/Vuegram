@@ -15,15 +15,24 @@
                         <v-list-item-subtitle>{{$t('settings.subtitle')}}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
-                <v-card-text>
-                    <v-text-field v-model="userProfile.name" :label="$t('settings.form.name')" name="name" prepend-icon="person" type="text" />
-                    <v-text-field v-model="userProfile.title" :placeholder="userProfile.title" :label="$t('settings.form.title')" name="title" prepend-icon="domain" type="text" />
-                    <v-text-field v-model="userProfile.profileImageUrl" :placeholder="$t('settings.form.imageUrl')" :label="$t('settings.form.imageUrl')" name="imageUrl" prepend-icon="mdi-file-image" type="text" />
-
-                    <v-btn class="white--text" min-width="100px" color="primary" :disabled="userProfile.name ==='' && userProfile.title === ''" @click="updateUserProfile">
-                        {{$t('settings.form.updateProfile')}}
-                    </v-btn>
-                </v-card-text>
+                <ValidationObserver v-slot="{ invalid }">
+                    <v-form @submit.prevent>
+                        <v-card-text>
+                            <ValidationProvider v-slot="{ errors }" name="name" rules="required">
+                                <v-text-field v-model="userProfile.name" :error-messages="errors" :label="$t('settings.form.name')" name="name" prepend-icon="person" type="text" />
+                            </ValidationProvider>
+                            <ValidationProvider v-slot="{ errors }" name="title" rules="required">
+                                <v-text-field v-model="userProfile.title" :error-messages="errors" :placeholder="userProfile.title" :label="$t('settings.form.title')" name="title" prepend-icon="domain" type="text" />
+                            </ValidationProvider>
+                            <ValidationProvider v-slot="{ errors }" rules="validateImageUrl">
+                                <v-text-field v-model="userProfile.profileImageUrl" :error-messages="errors" :placeholder="$t('settings.form.imageUrl')" :label="$t('settings.form.imageUrl')" name="imageUrl" prepend-icon="mdi-file-image" type="text" />
+                            </ValidationProvider>
+                            <v-btn class="white--text" min-width="100px" color="primary" :disabled="invalid" @click="updateUserProfile">
+                                {{$t('settings.form.updateProfile')}}
+                            </v-btn>
+                        </v-card-text>
+                    </v-form>
+                </ValidationObserver>
             </v-card>
         </v-flex>
     </v-layout>
@@ -31,13 +40,39 @@
 </template>
 
 <script>
-const isImageUrl = require('is-image-url');
 import {
     mapState,
     mapActions
 } from "vuex";
+import {
+    required,
+} from 'vee-validate/dist/rules'
+import {
+    extend,
+    ValidationProvider,
+    ValidationObserver
+} from 'vee-validate'
+
+const isImageUrl = require('is-image-url');
+
+extend('required', {
+    ...required,
+    message: '{_field_} can not be empty',
+})
+
+extend('validateImageUrl', {
+    message: 'Profile image url needs to be valid!',
+    validate: value => {
+        return isImageUrl(value);
+    }
+})
 
 export default {
+    name: 'Settings',
+    components: {
+        ValidationProvider,
+        ValidationObserver
+    },
     data() {
         return {
             showSuccess: false,
@@ -52,7 +87,7 @@ export default {
             return isImageUrl(this.userProfile.profileImageUrl);
         }
     },
-    updated () {
+    updated() {
         this.profileImageUrl = this.userProfile.profileImageUrl;
     },
     methods: {

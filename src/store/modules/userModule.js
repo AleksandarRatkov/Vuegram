@@ -32,7 +32,8 @@ export const userModule = {
                 fb.postsCollection.where('userId', '==', state.currentUser.uid).get().then(docs => {
                     docs.forEach(doc => {
                         fb.postsCollection.doc(doc.id).update({
-                            userName: name
+                            userName: name,
+                            profileImageUrl: profileImageUrl
                         })
                     })
                 })
@@ -40,7 +41,8 @@ export const userModule = {
                 fb.commentsCollection.where('userId', '==', state.currentUser.uid).get().then(docs => {
                     docs.forEach(doc => {
                         fb.commentsCollection.doc(doc.id).update({
-                            userName: name
+                            userName: name,
+                            profileImageUrl: profileImageUrl
                         })
                     })
                 })

@@ -5,7 +5,8 @@
             <v-card height="fix-content" class="mx-auto" elevation="18">
                 <v-list-item>
                     <v-list-item-avatar>
-                        <v-img src="../assets/aleksa.jpeg" alt="logoImage"></v-img>
+                        <v-img v-if="userProfile.profileImageUrl" :src="userProfile.profileImageUrl" alt="logoImage"></v-img>
+                        <v-icon v-if="!userProfile.profileImageUrl" large>mdi-account-circle</v-icon>
                     </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title class="headline">{{userProfile.name}}</v-list-item-title>
@@ -26,7 +27,8 @@
             <v-card height="fix-content" class="mx-auto" elevation="18">
                 <v-list-item>
                     <v-list-item-avatar>
-                        <v-img src="../assets/aleksa.jpeg" alt="logoImage"></v-img>
+                        <v-img v-if="post.profileImageUrl" :src="post.profileImageUrl" alt="logoImage"></v-img>
+                        <v-icon v-if="!post.profileImageUrl" large>mdi-account-circle</v-icon>
                     </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title class="headline">{{post.userName}}</v-list-item-title>
@@ -58,17 +60,19 @@
                 </v-flex>
                 <v-flex md12 v-if="post.id === currentCommentId && !loadingComents">
                     <v-card class="comments" shaped height="fix-content" v-for="(comment,index) in postComments" :key="index">
-                        <v-card-title>
-                            {{comment.userName}}
-                        </v-card-title>
-
-                        <v-card-subtitle>
-                            {{ comment.createdOn | formatDate }}
-                        </v-card-subtitle>
-
-                        <v-card-actions>
+                        <v-list-item>
+                            <v-list-item-avatar>
+                                <v-img v-if="comment.profileImageUrl" :src="comment.profileImageUrl" alt="logoImage"></v-img>
+                                <v-icon v-if="!comment.profileImageUrl" large>mdi-account-circle</v-icon>
+                            </v-list-item-avatar>
+                            <v-list-item-content>
+                                <v-list-item-title class="headline">{{comment.userName}}</v-list-item-title>
+                                <v-list-item-subtitle>{{ comment.createdOn | formatDate }}</v-list-item-subtitle>
+                            </v-list-item-content>
+                        </v-list-item>
+                        <v-card-text>
                             {{ comment.content }}
-                        </v-card-actions>
+                        </v-card-text>
                     </v-card>
                 </v-flex>
                 <br />
@@ -130,7 +134,7 @@ export default {
                 .doc(docId)
                 .get()
                 .then(doc => {
-                    console.log('Vrednost za post sa id-ijem: ' +postId + ' je sledeca: ' + doc.exists);
+                    console.log('Vrednost za post sa id-ijem: ' + postId + ' je sledeca: ' + doc.exists);
                     return doc.exists
                 })
                 .catch(err => {
@@ -167,6 +171,7 @@ export default {
                     createdOn: new Date(),
                     content: this.post.content,
                     userId: this.currentUser.uid,
+                    profileImageUrl: this.userProfile.profileImageUrl,
                     userName: this.userProfile.name,
                     comments: 0,
                     likes: 0
@@ -193,7 +198,8 @@ export default {
                     content: this.comment.content,
                     postId: postId,
                     userId: this.currentUser.uid,
-                    userName: this.userProfile.name
+                    userName: this.userProfile.name,
+                    profileImageUrl: this.userProfile.profileImageUrl,
                 })
                 // eslint-disable-next-line no-unused-vars
                 .then(doc => {

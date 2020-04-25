@@ -11,7 +11,8 @@
     <v-spacer />
     <v-badge bordered bottom color="green accent-4" dot offset-x="10" offset-y="10">
         <v-avatar left size="40">
-            <v-img src="../assets/aleksa.jpeg" alt="logoImage"></v-img>
+            <v-img v-if="userProfile.profileImageUrl" :src="userProfile.profileImageUrl" alt="logoImage"></v-img>
+            <v-icon v-if="!userProfile.profileImageUrl" large>mdi-account-circle</v-icon>
         </v-avatar>
     </v-badge>
 
@@ -54,7 +55,10 @@ export default {
         }
     },
     computed: {
-        ...mapState(['drawer']),
+        ...mapState({
+            userProfile: state => state.user.userProfile,
+            drawer: state => state.drawer
+        }),
     },
     methods: {
         ...mapMutations(['setDrawer']),
