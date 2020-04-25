@@ -22,31 +22,33 @@
                         <v-flex class="position" md4 offset-md4>
                             <v-progress-circular :size="120" color="primary" indeterminate v-if="performingRequest">Loading</v-progress-circular>
                         </v-flex>
-                        <v-card-text v-if="!performingRequest">
+                        <ValidationObserver v-slot="{ invalid }">
                             <v-form @submit.prevent>
-                                <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="loginForm.email" label="Email" :error-messages="errors" required name="loginEmail" prepend-icon="person" />
-                                </ValidationProvider>
+                                <v-card-text v-if="!performingRequest">
+                                    <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
+                                        <v-text-field v-model="loginForm.email" label="Email" :error-messages="errors" required name="loginEmail" prepend-icon="person" />
+                                    </ValidationProvider>
 
-                                <ValidationProvider v-slot="{ errors }" name="password" rules="required|min:6">
-                                    <v-text-field :type="showPassword ? 'text' : 'password'" @click:append="showPassword = !showPassword" :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'" v-model="loginForm.password" id="loginPassword" :error-messages="errors" label="Password" name="password" prepend-icon="lock" />
-                                </ValidationProvider>
+                                    <ValidationProvider v-slot="{ errors }" name="password" rules="required|min:6">
+                                        <v-text-field :type="showLoginPassword ? 'text' : 'password'" @click:append="showLoginPassword = !showLoginPassword" :append-icon="showLoginPassword ? 'mdi-eye' : 'mdi-eye-off'" v-model="loginForm.password" id="loginPassword" :error-messages="errors" label="Password" name="password" prepend-icon="lock" />
+                                    </ValidationProvider>
+                                </v-card-text>
+                                <v-flex md4 offset-md4>
+                                    <v-card-text @click="loginWithGoogle">
+                                        <v-avatar size="40" class="logo">
+                                            <v-img src="../assets/google-logo.png" alt="logoImage"></v-img>
+                                        </v-avatar>
+                                        <h4 class="sign-in">Sign In with Google</h4>
+                                    </v-card-text>
+                                </v-flex>
+                                <v-card-actions>
+                                    <v-btn text color="primary" @click="togglePasswordReset">Forgot Password</v-btn>
+                                    <v-btn text color="primary" @click="toggleForm">Create an account</v-btn>
+                                    <v-spacer />
+                                    <v-btn :disabled="invalid" class="white--text" color="primary" @click="login">Login</v-btn>
+                                </v-card-actions>
                             </v-form>
-                        </v-card-text>
-                        <v-flex md4 offset-md4>
-                            <v-card-text @click="loginWithGoogle">
-                                <v-avatar size="40" class="logo">
-                                    <v-img src="../assets/google-logo.png" alt="logoImage"></v-img>
-                                </v-avatar>
-                                <h4 class="sign-in">Sign In with Google</h4>
-                            </v-card-text>
-                        </v-flex>
-                        <v-card-actions>
-                            <v-btn text color="primary" @click="togglePasswordReset">Forgot Password</v-btn>
-                            <v-btn text color="primary" @click="toggleForm">Create an account</v-btn>
-                            <v-spacer />
-                            <v-btn class="white--text" color="primary" @click="login">Login</v-btn>
-                        </v-card-actions>
+                        </ValidationObserver>
                     </v-card>
 
                     <v-card class="elevation-12" v-show="!showLoginForm && !showForgotPassword">
@@ -56,21 +58,29 @@
                         <v-flex class="position" md4 offset-md4>
                             <v-progress-circular :size="120" color="primary" indeterminate v-if="performingRequest">Loading</v-progress-circular>
                         </v-flex>
-                        <v-card-text v-if="!performingRequest">
+                        <ValidationObserver v-slot="{ invalid }">
                             <v-form @submit.prevent>
-                                <v-text-field v-model="signupForm.name" label="Name" name="name" prepend-icon="person" type="text" />
-                                <v-text-field v-model="signupForm.title" label="Title" name="title" prepend-icon="domain" type="text" />
-                                <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
-                                    <v-text-field v-model="signupForm.email" :error-messages="errors" required label="Email" name="signupEmail" prepend-icon="email" type="text" />
-                                </ValidationProvider>
-                                <v-text-field v-model="signupForm.password" id="signUpPassword" label="Password" name="password" prepend-icon="lock" type="password" />
+                                <v-card-text v-if="!performingRequest">
+                                    <ValidationProvider v-slot="{ errors }" name="name" rules="required">
+                                        <v-text-field v-model="signupForm.name" :error-messages="errors" required label="Name" name="name" prepend-icon="person" type="text" />
+                                    </ValidationProvider>
+                                    <ValidationProvider v-slot="{ errors }" name="title" rules="required">
+                                        <v-text-field v-model="signupForm.title" :error-messages="errors" label="Title" name="title" prepend-icon="domain" type="text" />
+                                    </ValidationProvider>
+                                    <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
+                                        <v-text-field v-model="signupForm.email" :error-messages="errors" required label="Email" name="signupEmail" prepend-icon="email" type="text" />
+                                    </ValidationProvider>
+                                    <ValidationProvider v-slot="{ errors }" name="password" rules="required|min:6">
+                                        <v-text-field :type="showSignupPassword ? 'text' : 'password'" @click:append="showSignupPassword = !showSignupPassword" :append-icon="showSignupPassword ? 'mdi-eye' : 'mdi-eye-off'" v-model="signupForm.password" :error-messages="errors" id="signUpPassword" label="Password" name="password" prepend-icon="lock" />
+                                    </ValidationProvider>
+                                </v-card-text>
+                                <v-card-actions>
+                                    <v-spacer />
+                                    <v-btn text color="primary" @click="toggleForm">Back to login</v-btn>
+                                    <v-btn :disabled="invalid" class="white--text" color="primary" @click="signup">Sign Up</v-btn>
+                                </v-card-actions>
                             </v-form>
-                        </v-card-text>
-                        <v-card-actions>
-                            <v-spacer />
-                            <v-btn text color="primary" @click="togglePasswordReset">Back to login</v-btn>
-                            <v-btn class="white--text" color="primary" @click="signup">Sign Up</v-btn>
-                        </v-card-actions>
+                        </ValidationObserver>
                     </v-card>
                     <v-card class="elevation-12" v-show="showForgotPassword">
                         <v-toolbar color="primary" dark flat>
@@ -115,7 +125,8 @@ import {
 } from 'vee-validate/dist/rules'
 import {
     extend,
-    ValidationProvider
+    ValidationProvider,
+    ValidationObserver
 } from 'vee-validate'
 import firebase from 'firebase';
 
@@ -139,7 +150,8 @@ extend('min', {
 export default {
     name: 'Login',
     components: {
-        ValidationProvider
+        ValidationProvider,
+        ValidationObserver
     },
     data() {
         return {
@@ -160,7 +172,8 @@ export default {
             showForgotPassword: false,
             performingRequest: false,
             errorMsg: "",
-            showPassword: false,
+            showLoginPassword: false,
+            showSignupPassword: false,
             userExists: false
         };
     },
