@@ -46,7 +46,7 @@
                         {{$t('dashboard.addComment')}}
                     </v-btn>
                     <v-btn text color="primary">
-                        <v-btn icon color="grey" @click="likePost(post.id, post.likes)">
+                        <v-btn icon :color="didUserLikedPost(post.usersWhoLiked) ? 'red' : 'grey'" @click="likePost(post)">
                             <v-icon>mdi-heart</v-icon>
                         </v-btn> {{post.likes}}
                     </v-btn>
@@ -95,6 +95,7 @@ import {
     mapState,
 } from "vuex";
 import moment from "moment";
+import _ from 'lodash';
 const fb = require("../firebaseConfig.js");
 
 export default {
@@ -127,19 +128,8 @@ export default {
         }),
     },
     methods: {
-        didUserLikePost(postId) {
-            let docId = `${this.currentUser.uid}_${postId}`;
-
-            fb.likesCollection
-                .doc(docId)
-                .get()
-                .then(doc => {
-                    console.log('Vrednost za post sa id-ijem: ' + postId + ' je sledeca: ' + doc.exists);
-                    return doc.exists
-                })
-                .catch(err => {
-                    console.log(err);
-                });
+        didUserLikedPost(usersWhoLiked){
+            return _.includes(usersWhoLiked, this.currentUser.uid);
         },
         showFullPost(postId) {
             if (postId === this.fullPostId) {
@@ -174,6 +164,7 @@ export default {
                     profileImageUrl: this.userProfile.profileImageUrl,
                     userName: this.userProfile.name,
                     comments: 0,
+                    usersWhoLiked: [],
                     likes: 0
                 })
                 // eslint-disable-next-line no-unused-vars
@@ -216,41 +207,19 @@ export default {
                     console.log(err);
                 });
         },
-        likePost(postId, postLikes) {
-            let docId = `${this.currentUser.uid}_${postId}`;
-
-            fb.likesCollection
-                .doc(docId)
-                .get()
-                .then(doc => {
-                    if (doc.exists) {
-                        fb.likesCollection
-                            .doc(docId)
-                            .delete()
-                            .then(() => {
-                                // update post likes
-                                fb.postsCollection.doc(postId).update({
-                                    likes: postLikes - 1
-                                });
-                            });
-                    } else {
-                        fb.likesCollection
-                            .doc(docId)
-                            .set({
-                                postId: postId,
-                                userId: this.currentUser.uid
-                            })
-                            .then(() => {
-                                // update post likes
-                                fb.postsCollection.doc(postId).update({
-                                    likes: postLikes + 1
-                                });
-                            });
-                    }
+        likePost(post) {
+            if (_.includes(post.usersWhoLiked, this.currentUser.uid)) {
+                _.remove(post.usersWhoLiked, id => {
+                    return id === this.currentUser.uid;
                 })
-                .catch(err => {
-                    console.log(err);
-                });
+            } else {
+                post.usersWhoLiked.push(this.currentUser.uid);
+            }
+
+            fb.postsCollection.doc(post.id).update({
+                usersWhoLiked: post.usersWhoLiked,
+                likes: post.usersWhoLiked.length
+            })
         },
         viewPost(post) {
             this.loadingComents = true;
