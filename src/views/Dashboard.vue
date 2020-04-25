@@ -124,7 +124,6 @@ export default {
             userProfile: state => state.user.userProfile,
             currentUser: state => state.user.currentUser,
             posts: state => state.post.posts,
-            hiddenPosts: state => state.post.hiddenPosts
         }),
     },
     methods: {
