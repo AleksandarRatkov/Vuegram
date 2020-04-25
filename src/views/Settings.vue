@@ -87,9 +87,6 @@ export default {
             return isImageUrl(this.userProfile.profileImageUrl);
         }
     },
-    updated() {
-        this.profileImageUrl = this.userProfile.profileImageUrl;
-    },
     methods: {
         ...mapActions({
             updateProfile: 'user/updateProfile'
