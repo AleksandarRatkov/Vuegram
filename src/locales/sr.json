@@ -16,7 +16,8 @@
     "form": {
       "name": "Ime",
       "title": "Kompanija",
-      "updateProfile": "Ažurirajte profil"
+      "updateProfile": "Ažurirajte profil",
+      "imageUrl": "Url profilne slike"
     }
   },
   "dashboard": {

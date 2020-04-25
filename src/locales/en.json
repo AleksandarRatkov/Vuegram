@@ -16,7 +16,8 @@
     "form": {
       "name": "Name",
       "title": "Company",
-      "updateProfile": "Update profile"
+      "updateProfile": "Update profile",
+      "imageUrl": "Profile image url"
     }
   },
   "dashboard": {

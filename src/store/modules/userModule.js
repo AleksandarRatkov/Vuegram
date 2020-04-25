@@ -25,8 +25,9 @@ export const userModule = {
           updateProfile({ state }, data) {
             let name = data.name
             let title = data.title
+            let profileImageUrl = data.profileImageUrl
       
-            fb.usersCollection.doc(state.currentUser.uid).update({ name, title }).then(() => {
+            fb.usersCollection.doc(state.currentUser.uid).update({ name, title, profileImageUrl }).then(() => {
                 // update all posts by user to reflect new name
                 fb.postsCollection.where('userId', '==', state.currentUser.uid).get().then(docs => {
                     docs.forEach(doc => {
