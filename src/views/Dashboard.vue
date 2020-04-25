@@ -1,5 +1,5 @@
 <template>
-<v-container fluid class="background">
+<v-container fluid>
     <v-layout column>
         <v-flex md12>
             <v-card height="fix-content" class="mx-auto" elevation="18">
