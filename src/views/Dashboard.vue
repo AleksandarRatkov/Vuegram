@@ -128,7 +128,7 @@ export default {
         }),
     },
     methods: {
-        didUserLikedPost(usersWhoLiked){
+        didUserLikedPost(usersWhoLiked) {
             return _.includes(usersWhoLiked, this.currentUser.uid);
         },
         showFullPost(postId) {
@@ -151,9 +151,13 @@ export default {
 
         },
         showCommentForm(postId) {
-            this.currentPostId = postId
-            this.comment.content = ''
-            this.currentCommentId = ''
+            if (this.currentPostId === postId) {
+                this.currentPostId = ''
+            } else {
+                this.currentPostId = postId
+                this.comment.content = ''
+                this.currentCommentId = ''
+            }
         },
         createPost() {
             fb.postsCollection
