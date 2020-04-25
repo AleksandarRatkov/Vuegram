@@ -1,9 +1,6 @@
 <template>
 <v-app-bar :clipped-left="$vuetify.breakpoint.lgAndUp" app src="../assets/background.webp" dark>
     <v-app-bar-nav-icon @click.native="setDrawer(!drawer)" />
-    <v-btn icon>
-        <v-icon>mdi-facebook</v-icon>
-    </v-btn>
     <v-toolbar-title style="width: 300px" class="ml-0 pl-4">
         <span class="hidden-sm-and-down">{{$t('navbar.welcome')}}</span>
     </v-toolbar-title>
