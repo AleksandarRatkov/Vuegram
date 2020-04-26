@@ -10,23 +10,6 @@ fb.auth.onAuthStateChanged(user => {
   if (user) {
     store.commit('user/setCurrentUser', user)
     store.dispatch('user/fetchUserProfile')
-
-    fb.usersCollection.doc(user.uid).onSnapshot(doc => {
-      store.commit('user/setUserProfile', doc.data())
-    })
-
-    // realtime updates from our posts collection
-    fb.postsCollection.orderBy('createdOn', 'desc').onSnapshot(querySnapshot => {
-        let postsArray = []
-
-        querySnapshot.forEach(doc => {
-          let post = doc.data()
-          post.id = doc.id
-          postsArray.push(post)
-        })
-
-        store.commit('post/setPosts', postsArray)
-    })
   }
 })
 
