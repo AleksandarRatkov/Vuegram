@@ -79,7 +79,6 @@ export default {
         };
     },
     computed: {
-        // ...mapState('user',["userProfile"]),
         ...mapState({
             userProfile: state => state.user.userProfile,
         }),
@@ -96,7 +95,6 @@ export default {
                 name: this.userProfile.name,
                 title: this.userProfile.title,
                 profileImageUrl: this.userProfile.profileImageUrl,
-
             });
 
             this.showSuccess = true;
