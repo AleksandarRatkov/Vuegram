@@ -92,7 +92,7 @@
 
 <script>
 import {
-    mapState,
+    mapState, mapActions,
 } from "vuex";
 import moment from "moment";
 import _ from 'lodash';
@@ -119,6 +119,9 @@ export default {
             loadingComents: false,
         };
     },
+    created () {
+        this.fetchAllPosts();
+    },
     computed: {
         ...mapState({
             userProfile: state => state.user.userProfile,
@@ -127,6 +130,9 @@ export default {
         }),
     },
     methods: {
+        ...mapActions({
+            fetchAllPosts: 'post/fetchAllPosts'
+        }),
         didUserLikedPost(usersWhoLiked) {
             return _.includes(usersWhoLiked, this.currentUser.uid);
         },
