@@ -240,7 +240,8 @@ export default {
                 .doc(user.uid)
                 .set({
                     name: name,
-                    title: title
+                    title: title,
+                    following: []
                 })
                 .then(() => {
                     this.afterSuccessfulLogin();
