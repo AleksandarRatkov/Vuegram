@@ -27,5 +27,9 @@
     "addComment": "Dodaj komentar",
     "onYourMind": "O čemu razmišljaš?",
     "showFullPost": "Kliknite da vidite ceo post"
+  },
+  "contacts": {
+    "follow": "Zaprati",
+    "unfollow": "Otprati"
   }
 }

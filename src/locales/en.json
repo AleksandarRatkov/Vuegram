@@ -27,5 +27,9 @@
     "addComment": "Add comment",
     "onYourMind": "What's on your mind?",
     "showFullPost": "Click to see complete post"
+  },
+  "contacts": {
+    "follow": "Follow",
+    "unfollow": "Unfollow"
   }
 }
