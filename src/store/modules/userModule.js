@@ -35,7 +35,9 @@ export const userModule = {
           },
         fetchUserProfile({ commit, state }) {
             fb.usersCollection.doc(state.currentUser.uid).get().then(res => {
-              commit('setUserProfile', res.data())
+              let user = res.data();
+              user.id = res.id;
+              commit('setUserProfile', user)
             }).catch(err => {
               console.log(err)
             })
