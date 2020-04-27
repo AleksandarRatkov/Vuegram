@@ -39,7 +39,6 @@ export default {
     computed: {
         ...mapState({
             fetchedUsers: state => state.user.users,
-            currentUser: state => state.user.currentUser,
             userProfile: state => state.user.userProfile
         })
     },

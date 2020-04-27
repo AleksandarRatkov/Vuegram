@@ -92,7 +92,8 @@
 
 <script>
 import {
-    mapState, mapActions,
+    mapState,
+    mapActions,
 } from "vuex";
 import moment from "moment";
 import _ from 'lodash';
@@ -119,22 +120,22 @@ export default {
             loadingComents: false,
         };
     },
-    created () {
+    created() {
         this.fetchAllPosts();
     },
     computed: {
         ...mapState({
             userProfile: state => state.user.userProfile,
-            currentUser: state => state.user.currentUser,
             posts: state => state.post.posts,
         }),
     },
     methods: {
         ...mapActions({
-            fetchAllPosts: 'post/fetchAllPosts'
+            fetchAllPosts: 'post/fetchAllPosts',
+            fetchUserProfile: 'user/fetchUserProfile'
         }),
         didUserLikedPost(usersWhoLiked) {
-            return _.includes(usersWhoLiked, this.currentUser.uid);
+            return _.includes(usersWhoLiked, this.userProfile.id);
         },
         showFullPost(postId) {
             if (postId === this.fullPostId) {
@@ -169,7 +170,7 @@ export default {
                 .add({
                     createdOn: new Date(),
                     content: this.post.content,
-                    userId: this.currentUser.uid,
+                    userId: this.userProfile.id,
                     profileImageUrl: this.userProfile.profileImageUrl,
                     userName: this.userProfile.name,
                     comments: 0,
@@ -197,7 +198,7 @@ export default {
                     createdOn: new Date(),
                     content: this.comment.content,
                     postId: postId,
-                    userId: this.currentUser.uid,
+                    userId: this.userProfile.id,
                     userName: this.userProfile.name,
                     profileImageUrl: this.userProfile.profileImageUrl,
                 })
@@ -217,12 +218,12 @@ export default {
                 });
         },
         likePost(post) {
-            if (_.includes(post.usersWhoLiked, this.currentUser.uid)) {
+            if (_.includes(post.usersWhoLiked, this.userProfile.id)) {
                 _.remove(post.usersWhoLiked, id => {
-                    return id === this.currentUser.uid;
+                    return id === this.userProfile.id;
                 })
             } else {
-                post.usersWhoLiked.push(this.currentUser.uid);
+                post.usersWhoLiked.push(this.userProfile.id);
             }
 
             fb.postsCollection.doc(post.id).update({
@@ -251,10 +252,6 @@ export default {
                     this.loadingComents = false;
                     console.log(err);
                 });
-        },
-        closePostModal() {
-            this.postComments = [];
-            this.showPostModal = false;
         }
     },
     filters: {
