@@ -235,6 +235,7 @@ export default {
             this.loadingComents = true;
             fb.commentsCollection
                 .where("postId", "==", post.id)
+                .orderBy('createdOn', 'desc')
                 .get()
                 .then(docs => {
                     let commentsArray = [];
