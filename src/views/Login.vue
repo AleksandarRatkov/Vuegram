@@ -4,8 +4,7 @@
         <v-flex md6 class="full-height">
             <h1>Vuegram</h1>
             <p class="login-text">
-                Welcome to the
-                <a href="https://savvyapps.com/" target="_blank">Savvy Apps</a> sample
+                Welcome to the sample
                 social media web app powered by Vue.js and Firebase. Build this
                 project by checking out The Definitive Guide to Getting Started with
                 Vue.js

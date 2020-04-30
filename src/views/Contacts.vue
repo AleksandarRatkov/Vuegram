@@ -27,7 +27,6 @@
 import {
     mapActions,
     mapState,
-    mapMutations
 } from 'vuex'
 import _ from 'lodash';
 
@@ -47,9 +46,6 @@ export default {
             getOtherUsers: 'user/fetchUsersBeside',
             updateProfileFollowing: 'user/updateProfileFollowing',
             fetchUserProfile: 'user/fetchUserProfile'
-        }),
-        ...mapMutations({
-            setUserProfile: 'user/setUserProfile'
         }),
         isUserFollowed(userId) {
             return _.includes(this.userProfile.following, userId);
