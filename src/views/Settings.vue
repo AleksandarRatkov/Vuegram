@@ -19,16 +19,16 @@
                     <v-form @submit.prevent>
                         <v-card-text>
                             <ValidationProvider v-slot="{ errors }" name="name" rules="required">
-                                <v-text-field v-model="userProfile.name" :error-messages="errors" :label="$t('settings.form.name')" name="name" prepend-icon="person" type="text" />
+                                <v-text-field v-model="userProfile.name" :error-messages="errors" :label="$t('form.name')" name="name" prepend-icon="person" type="text" />
                             </ValidationProvider>
                             <ValidationProvider v-slot="{ errors }" name="title" rules="required">
-                                <v-text-field v-model="userProfile.title" :error-messages="errors" :placeholder="userProfile.title" :label="$t('settings.form.title')" name="title" prepend-icon="domain" type="text" />
+                                <v-text-field v-model="userProfile.title" :error-messages="errors" :placeholder="userProfile.title" :label="$t('form.title')" name="title" prepend-icon="domain" type="text" />
                             </ValidationProvider>
                             <ValidationProvider v-slot="{ errors }" rules="validateImageUrl">
-                                <v-text-field v-model="userProfile.profileImageUrl" :error-messages="errors" :placeholder="$t('settings.form.imageUrl')" :label="$t('settings.form.imageUrl')" name="imageUrl" prepend-icon="mdi-file-image" type="text" />
+                                <v-text-field v-model="userProfile.profileImageUrl" :error-messages="errors" :placeholder="$t('form.imageUrl')" :label="$t('form.imageUrl')" name="imageUrl" prepend-icon="mdi-file-image" type="text" />
                             </ValidationProvider>
                             <v-btn class="white--text" min-width="100px" color="primary" :disabled="invalid" @click="updateUserProfile">
-                                {{$t('settings.form.updateProfile')}}
+                                {{$t('form.updateProfile')}}
                             </v-btn>
                         </v-card-text>
                     </v-form>

@@ -12,13 +12,7 @@
   "settings": {
     "alert": "Uspešno ste ažurirali vaš profil!",
     "title": "Podešavanja",
-    "subtitle": "Ažurirajte vaša podešavanja",
-    "form": {
-      "name": "Ime",
-      "title": "Kompanija",
-      "updateProfile": "Ažurirajte profil",
-      "imageUrl": "Url profilne slike"
-    }
+    "subtitle": "Ažurirajte vaša podešavanja"
   },
   "dashboard": {
     "post": "Okači",
@@ -31,5 +25,29 @@
   "contacts": {
     "follow": "Zaprati",
     "unfollow": "Otprati"
+  },
+  "form": {
+    "name": "Ime",
+    "title": "Kompanija",
+    "updateProfile": "Ažurirajte profil",
+    "imageUrl": "Url profilne slike",
+    "password": "Lozinka",
+    "email": "Email"
+  },
+  "login": {
+    "loginForm": "Forma prijavljivanja",
+    "welcome": "Dobrodošli u oglednu veb aplikaciju za društvene mreže koju pokreću Vue.js i Firebase. Izgradite ovaj projekat tako što ćete pročitati Definitivni vodič za početak rada sa Vue.js",
+    "loading": "Učitavanje",
+    "signIn":"Prijavi se pomoću Googla",
+    "forgot":"Zaboravljena lozinka",
+    "createAccount":"Kreiraj nalog",
+    "login":"Prijavi se",
+    "signUpForm":"Kreiraj nalog",
+    "backToLogin":"Nazad na prijavljivanje",
+    "signUp":"Kreiraj",
+    "passReset":"Resetuj lozinku",
+    "passResetEmail":"Poslaćemo Vam email kako bi resetovali lozinku",
+    "submit":"Pošalji",
+    "loginAlert":"Neuspešno prijavljivanje! Pogrešan email ili lozinka!"
   }
 }
