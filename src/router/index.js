@@ -4,7 +4,7 @@ import Settings from '../views/Settings.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Contacts from '../views/Contacts.vue'
 import Login from '../views/Login.vue'
-import firebase from 'firebase'
+import {auth} from '../firebaseConfig'
 
 Vue.use(VueRouter)
 
@@ -55,12 +55,10 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
-  const currentUser = firebase.auth().currentUser
+  const currentUser = auth.currentUser
 
   if (requiresAuth && !currentUser) {
       next('/login')
-  } else if (requiresAuth && currentUser) {
-      next()
   } else {
       next()
   }

@@ -20,7 +20,6 @@ import 'firebase/firestore'
   // firebase utils
 const db = firebase.firestore()
 const auth = firebase.auth()
-const currentUser = auth.currentUser
 
 // firebase collections
 const usersCollection = db.collection('users')
@@ -30,7 +29,6 @@ const commentsCollection = db.collection('comments')
 export {
     db,
     auth,
-    currentUser,
     usersCollection,
     postsCollection,
     commentsCollection,
