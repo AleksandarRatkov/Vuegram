@@ -33,15 +33,7 @@
                                 </v-card-text>
                                 <section id="firebaseui-auth-container"></section>
 
-                                <v-flex md4 offset-md4>
-                                    <section id="firebaseui-auth-container"></section>
-                                    <!-- <v-card-text @click="loginWithGoogle">
-                                        <v-avatar size="40" class="logo">
-                                            <v-img src="../assets/google-logo.png" alt="logoImage"></v-img>
-                                        </v-avatar>
-                                        <h4 class="sign-in">{{$t('login.signIn')}}</h4>
-                                    </v-card-text> -->
-                                </v-flex>
+                                <section id="firebaseui-auth-container"></section>
                                 <v-card-actions>
                                     <v-btn text color="primary" @click="togglePasswordReset">{{$t('login.forgot')}}</v-btn>
                                     <v-btn text color="primary" @click="toggleForm">{{$t('login.createAccount')}}</v-btn>
