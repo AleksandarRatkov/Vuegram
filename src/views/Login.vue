@@ -31,13 +31,16 @@
                                         <v-text-field :type="showLoginPassword ? 'text' : 'password'" @click:append="showLoginPassword = !showLoginPassword" :append-icon="showLoginPassword ? 'mdi-eye' : 'mdi-eye-off'" v-model="loginForm.password" id="loginPassword" :error-messages="errors" :label="$t('form.password')" name="password" prepend-icon="lock" />
                                     </ValidationProvider>
                                 </v-card-text>
+                                <section id="firebaseui-auth-container"></section>
+
                                 <v-flex md4 offset-md4>
-                                    <v-card-text @click="loginWithGoogle">
+                                    <section id="firebaseui-auth-container"></section>
+                                    <!-- <v-card-text @click="loginWithGoogle">
                                         <v-avatar size="40" class="logo">
                                             <v-img src="../assets/google-logo.png" alt="logoImage"></v-img>
                                         </v-avatar>
                                         <h4 class="sign-in">{{$t('login.signIn')}}</h4>
-                                    </v-card-text>
+                                    </v-card-text> -->
                                 </v-flex>
                                 <v-card-actions>
                                     <v-btn text color="primary" @click="togglePasswordReset">{{$t('login.forgot')}}</v-btn>
@@ -131,6 +134,8 @@ import {
     ValidationObserver
 } from 'vee-validate'
 import firebase from 'firebase';
+import * as firebaseui from 'firebaseui'
+import "firebaseui/dist/firebaseui.css";
 
 const fb = require("../firebaseConfig");
 
@@ -154,6 +159,25 @@ export default {
     components: {
         ValidationProvider,
         ValidationObserver
+    },
+    mounted() {
+        let ui = firebaseui.auth.AuthUI.getInstance();
+        if (!ui) {
+            ui = new firebaseui.auth.AuthUI(firebase.auth());
+        }
+        var uiConfig = {
+            signInSuccessUrl: "/dashboard",
+            signInOptions: [
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+            ],
+            callbacks: {
+                signInSuccess: (currentUser) => {
+                    this.checkIfUserExist(currentUser);
+                }
+            }
+        };
+        ui.start("#firebaseui-auth-container", uiConfig);
     },
     data() {
         return {
@@ -191,18 +215,6 @@ export default {
         }),
         setPerformingRequest(value) {
             this.performingRequest = value;
-        },
-        loginWithGoogle() {
-            this.setPerformingRequest(true);
-            const provider = new firebase.auth.GoogleAuthProvider();
-            fb.auth.signInWithPopup(provider).then((user) => {
-                this.checkIfUserExist(user.user);
-            }).catch((err) => {
-                console.log(err);
-                this.showLoginError = true;
-                this.errorMsg = err.message;
-                this.setPerformingRequest(false);
-            });
         },
         login() {
             this.setPerformingRequest(true);
