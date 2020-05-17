@@ -1,7 +1,7 @@
 <template>
 <v-container fluid>
     <v-layout column>
-        <v-flex md12>
+        <v-flex md12 sm12>
             <v-card height="fix-content" class="mx-auto" elevation="18">
                 <v-list-item>
                     <v-list-item-avatar>
@@ -279,5 +279,8 @@ export default {
 
 .comments {
     margin: 15px;
+}
+.v-card__actions {
+    display: initial;
 }
 </style>
