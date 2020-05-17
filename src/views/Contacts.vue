@@ -1,7 +1,7 @@
 <template>
 <v-container fluid>
     <v-row>
-        <v-col v-for="(user, index) in fetchedUsers" :key="index" cols="4">
+        <v-col v-for="(user, index) in fetchedUsers" :key="index" md="4" lg="4" sm="1">
             <v-card class="mx-auto profile" max-width="344">
                 <v-img class="image" v-if="user.profileImageUrl" :src="user.profileImageUrl"></v-img>
                 <v-img class="image" v-if="!user.profileImageUrl" src="../assets/defaultUser.png"></v-img>
@@ -71,5 +71,11 @@ export default {
 <style lang="scss" scoped>
 .image {
     height: 344px;
+}
+@media (min-width: 600px) {
+
+.col-sm-1 {
+ max-width: none;
+}
 }
 </style>
