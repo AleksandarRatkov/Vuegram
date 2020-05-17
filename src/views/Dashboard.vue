@@ -96,7 +96,6 @@ import {
     mapActions,
 } from "vuex";
 import moment from "moment";
-import _ from 'lodash';
 const fb = require("../firebaseConfig.js");
 
 export default {

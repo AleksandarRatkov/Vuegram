@@ -1,5 +1,4 @@
 const fb = require('../../firebaseConfig')
-import _ from 'lodash';
 
 export const postModule = {
     namespaced: true,
