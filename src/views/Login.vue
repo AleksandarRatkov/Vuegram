@@ -328,8 +328,8 @@ export default {
         firebase.auth.FacebookAuthProvider.PROVIDER_ID,
       ],
       callbacks: {
-        signInSuccess: (currentUser) => {
-          this.checkIfUserExist(currentUser);
+        signInSuccessWithAuthResult: (currentUser) => {
+          this.checkIfUserExist(currentUser.uid);
         },
       },
     };
@@ -364,7 +364,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setCurrentUser: "user/setCurrentUser",
+      setCurrentUserId: "user/setCurrentUserId",
     }),
     ...mapActions({
       fetchUserProfile: "user/fetchUserProfile",
@@ -380,10 +380,8 @@ export default {
           this.loginForm.password
         )
         .then((user) => {
-          this.setCurrentUser(user.user);
-          this.fetchUserProfile();
-          this.$router.push("/dashboard");
-          this.setPerformingRequest(false);
+          this.setCurrentUserId(user.user.uid);
+          this.afterSuccessfulLogin();
         })
         .catch((err) => {
           console.log(err);
@@ -402,7 +400,7 @@ export default {
         )
         .then((user) => {
           this.addUserToDb(
-            user.user,
+            user.user.uid,
             this.signupForm.name,
             this.signupForm.title
           );
@@ -414,10 +412,10 @@ export default {
           this.setPerformingRequest(false);
         });
     },
-    addUserToDb(user, name, title) {
-      this.setCurrentUser(user);
+    addUserToDb(userId, name, title) {
+      this.setCurrentUserId(userId);
       fb.usersCollection
-        .doc(user.uid)
+        .doc(userId)
         .set({
           name: name,
           title: title,
@@ -432,17 +430,16 @@ export default {
         });
     },
     afterSuccessfulLogin() {
-      this.fetchUserProfile();
       this.$router.push("/dashboard");
       this.setPerformingRequest(false);
     },
-    checkIfUserExist(user) {
+    checkIfUserExist(userId) {
       fb.usersCollection
-        .doc(user.uid)
+        .doc(userId)
         .get()
         .then((res) => {
           if (!res.exists) {
-            this.addUserToDb(user, user.displayName, "");
+            this.addUserToDb(userId, user.displayName, "");
           } else {
             this.afterSuccessfulLogin();
           }

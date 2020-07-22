@@ -206,9 +206,6 @@ export default {
       loadingComents: false,
     };
   },
-  created() {
-    this.fetchAllPosts();
-  },
   computed: {
     ...mapState({
       userProfile: (state) => state.user.userProfile,
@@ -217,7 +214,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchAllPosts: "post/fetchAllPosts",
       fetchUserProfile: "user/fetchUserProfile",
     }),
     didUserLikedPost(usersWhoLiked) {
