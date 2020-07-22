@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row class="settings">
-      <v-col md10>
+      <v-col md="10">
         <v-alert
           v-model="showSuccess"
           transition="scale-transition"
