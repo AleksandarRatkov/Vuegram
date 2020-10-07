@@ -206,6 +206,10 @@ export default {
       loadingComents: false,
     };
   },
+  async mounted() {
+    await this.fetchUserProfile();
+    await this.fetchPosts();
+  },
   computed: {
     ...mapState({
       userProfile: (state) => state.user.userProfile,
@@ -215,6 +219,7 @@ export default {
   methods: {
     ...mapActions({
       fetchUserProfile: "user/fetchUserProfile",
+      fetchPosts: "post/fetchAllPosts",
     }),
     didUserLikedPost(usersWhoLiked) {
       return _.includes(usersWhoLiked, this.userProfile.id);

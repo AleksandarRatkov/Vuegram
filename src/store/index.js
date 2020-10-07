@@ -10,7 +10,7 @@ fb.auth.onAuthStateChanged(user => {
   if (user) {
     store.commit('user/setCurrentUserId', user.uid)
     store.dispatch('user/fetchUserProfile')
-    store.dispatch('post/fetchAllPosts');
+    // store.dispatch('post/fetchAllPosts');
   }
 })
 

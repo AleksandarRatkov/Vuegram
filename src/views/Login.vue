@@ -15,7 +15,7 @@
 
     <v-col class="align-content-space-between layout wrap" cols="12" md="6">
       <v-row align="center" justify="center" class="ma-0 full-screen">
-        <v-col cols="12" md="10" v-show="showLoginForm" class="forms">
+        <!-- <v-col cols="12" md="10" v-show="showLoginForm" class="forms">
           <v-card class="elevation-12">
             <v-toolbar src="../assets/background.webp" dark flat>
               <v-toolbar-title>{{ $t("login.loginForm") }}</v-toolbar-title>
@@ -101,7 +101,7 @@
               </v-form>
             </ValidationObserver>
           </v-card>
-        </v-col>
+        </v-col> -->
         <v-col
           cols="12"
           md="10"
@@ -133,91 +133,56 @@
             >
               {{ errorMsg }}
             </v-alert>
-            <ValidationObserver v-slot="{ invalid }">
-              <v-form @submit.prevent>
-                <v-card-text v-if="!performingRequest">
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="name"
-                    rules="required"
-                  >
-                    <v-text-field
-                      v-model="signupForm.name"
-                      :error-messages="errors"
-                      required
-                      :label="$t('form.name')"
-                      name="name"
-                      prepend-icon="person"
-                      type="text"
-                    />
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="title"
-                    rules="required"
-                  >
-                    <v-text-field
-                      v-model="signupForm.title"
-                      :error-messages="errors"
-                      :label="$t('form.title')"
-                      name="title"
-                      prepend-icon="domain"
-                      type="text"
-                    />
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="email"
-                    rules="required|email"
-                  >
-                    <v-text-field
-                      v-model="signupForm.email"
-                      :error-messages="errors"
-                      required
-                      :label="$t('form.email')"
-                      name="signupEmail"
-                      prepend-icon="email"
-                      type="text"
-                    />
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="password"
-                    rules="required|min:6"
-                  >
-                    <v-text-field
-                      :type="showSignupPassword ? 'text' : 'password'"
-                      @click:append="showSignupPassword = !showSignupPassword"
-                      :append-icon="
-                        showSignupPassword ? 'mdi-eye' : 'mdi-eye-off'
-                      "
-                      v-model="signupForm.password"
-                      :error-messages="errors"
-                      id="signUpPassword"
-                      :label="$t('form.password')"
-                      name="password"
-                      prepend-icon="lock"
-                    />
-                  </ValidationProvider>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer />
-                  <v-btn text color="primary" @click="toggleForm">{{
-                    $t("login.backToLogin")
-                  }}</v-btn>
-                  <v-btn
-                    :disabled="invalid"
-                    class="white--text"
-                    color="primary"
-                    @click="signup"
-                    >{{ $t("login.signUp") }}</v-btn
-                  >
-                </v-card-actions>
-              </v-form>
-            </ValidationObserver>
+            <v-form @submit.prevent>
+              <v-card-text v-if="!performingRequest">
+                <v-text-field
+                  v-model="signupForm.name"
+                  :label="$t('form.name')"
+                  name="name"
+                  prepend-icon="person"
+                  type="text"
+                />
+                <v-text-field
+                  v-model="signupForm.title"
+                  :label="$t('form.title')"
+                  name="title"
+                  prepend-icon="domain"
+                  type="text"
+                />
+                <v-text-field
+                  v-model="signupForm.email"
+                  :label="$t('form.email')"
+                  name="signupEmail"
+                  prepend-icon="email"
+                  type="text"
+                />
+                <v-text-field
+                  :type="showSignupPassword ? 'text' : 'password'"
+                  @click:append="showSignupPassword = !showSignupPassword"
+                  :append-icon="showSignupPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  v-model="signupForm.password"
+                  id="signUpPassword"
+                  :label="$t('form.password')"
+                  name="password"
+                  prepend-icon="lock"
+                />
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer />
+                <v-btn text color="primary" @click="toggleForm">{{
+                  $t("login.backToLogin")
+                }}</v-btn>
+                <v-btn
+                  class="white--text"
+                  color="primary"
+                  @click.native.prevent="signup"
+                  >{{ $t("login.signUp") }}</v-btn
+                >
+              </v-card-actions>
+            </v-form>
           </v-card>
         </v-col>
-        <v-col cols="12" md="10" v-show="showForgotPassword" class="forms">
+        <!-- <v-col cols="12" md="10" v-show="showForgotPassword" class="forms">
           <v-card class="elevation-12">
             <v-toolbar src="../assets/background.webp" dark flat>
               <v-toolbar-title>{{ $t("login.passReset") }}</v-toolbar-title>
@@ -279,7 +244,7 @@
               >
             </v-card-actions>
           </v-card>
-        </v-col>
+        </v-col> -->
       </v-row>
     </v-col>
   </v-row>
@@ -287,53 +252,53 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
-import { required, email, min } from "vee-validate/dist/rules";
-import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
-import firebase from "firebase";
-import * as firebaseui from "firebaseui";
-import "firebaseui/dist/firebaseui.css";
+// import { required, email, min } from "vee-validate/dist/rules";
+// import { extend, ValidationProvider, ValidationObserver } from "vee-validate";
+// import firebase from "firebase";
+// import * as firebaseui from "firebaseui";
+// import "firebaseui/dist/firebaseui.css";
 
 const fb = require("../firebaseConfig");
 
-extend("required", {
-  ...required,
-  message: "{_field_} can not be empty",
-});
+// extend("required", {
+//   ...required,
+//   message: "{_field_} can not be empty",
+// });
 
-extend("email", {
-  ...email,
-  message: "Email must be valid",
-});
+// extend("email", {
+//   ...email,
+//   message: "Email must be valid",
+// });
 
-extend("min", {
-  ...min,
-  message: "{_field_} must be greater than {length} characters",
-});
+// extend("min", {
+//   ...min,
+//   message: "{_field_} must be greater than {length} characters",
+// });
 
 export default {
   name: "Login",
   components: {
-    ValidationProvider,
-    ValidationObserver,
+    // ValidationProvider,
+    // ValidationObserver,
   },
   mounted() {
-    let ui = firebaseui.auth.AuthUI.getInstance();
-    if (!ui) {
-      ui = new firebaseui.auth.AuthUI(firebase.auth());
-    }
-    var uiConfig = {
-      signInSuccessUrl: "/dashboard",
-      signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      ],
-      callbacks: {
-        signInSuccessWithAuthResult: (currentUser) => {
-          this.checkIfUserExist(currentUser.uid);
-        },
-      },
-    };
-    ui.start("#firebaseui-auth-container", uiConfig);
+    // let ui = firebaseui.auth.AuthUI.getInstance();
+    // if (!ui) {
+    //   ui = new firebaseui.auth.AuthUI(firebase.auth());
+    // }
+    // var uiConfig = {
+    //   signInSuccessUrl: "/dashboard",
+    //   signInOptions: [
+    //     firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    //     firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    //   ],
+    //   callbacks: {
+    //     signInSuccessWithAuthResult: (currentUser) => {
+    //       this.checkIfUserExist(currentUser.uid);
+    //     },
+    //   },
+    // };
+    // ui.start("#firebaseui-auth-container", uiConfig);
   },
   data() {
     return {
@@ -350,7 +315,7 @@ export default {
       passwordForm: {
         email: "",
       },
-      showLoginForm: true,
+      showLoginForm: false,
       showForgotPassword: false,
       performingRequest: false,
       errorMsg: "",
@@ -391,7 +356,7 @@ export default {
         });
     },
     signup() {
-      this.setPerformingRequest(true);
+      // this.setPerformingRequest(true);
 
       fb.auth
         .createUserWithEmailAndPassword(
@@ -419,6 +384,7 @@ export default {
         .set({
           name: name,
           title: title,
+          profileImageUrl: "",
           following: [],
         })
         .then(() => {
